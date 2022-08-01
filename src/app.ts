@@ -1,8 +1,10 @@
 import express, { Express } from 'express'
+import 'reflect-metadata'
+
 import { webhookRoute } from './routes/webhook-route'
 
 class App {
-    public server: Express
+    server: Express
 
     constructor() {
         this.server = express()
@@ -12,14 +14,18 @@ class App {
     }
 
     middlewares() {
-        this.server.use(express.json())
-        this.server.use(express.urlencoded({
-            extended: true
-        }))
+        this.server.use(
+            express.json(), 
+            express.urlencoded({
+                extended: true
+            })
+        )
     }
 
     routes() {
-        this.server.use('/webhook', webhookRoute)
+        this.server.use('/webhook', [
+            webhookRoute
+        ])
     }
 }
 

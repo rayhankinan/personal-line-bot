@@ -10,7 +10,10 @@
         "baseUrl": ".",
         "paths": {
             "*": ["node_modules/*"]
-        }
+        },
+        "lib": ["es5", "es6"],
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
     },
     "include": ["src/**/*"]
 }
