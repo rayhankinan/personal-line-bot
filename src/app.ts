@@ -1,5 +1,5 @@
 import express, { Express } from 'express'
-import { webhookRoute } from './routes/webhook.route'
+import { webhookRoute } from './routes/webhook-route'
 
 class App {
     public server: Express
@@ -19,7 +19,7 @@ class App {
     }
 
     routes() {
-        this.server.use(webhookRoute)
+        this.server.use('/webhook', webhookRoute)
     }
 }
 
