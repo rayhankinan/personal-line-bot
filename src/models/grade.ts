@@ -1,19 +1,19 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
-import { Assignment } from './assignment'
+import { CourseGrade } from './course-grade'
 
 @Entity()
-export class Admin extends BaseEntity {
+export class Grade extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column()
-    username: string
+    major: string
 
     @Column()
-    password: string
+    year: number
 
-    @OneToMany(() => Assignment, (assignment) => assignment.id)
-    assignmments: Assignment[]
+    @OneToMany(() => CourseGrade, (coursegrade) => coursegrade.id)
+    coursegrades: CourseGrade[]
 
     @CreateDateColumn()
     createdAt: Date

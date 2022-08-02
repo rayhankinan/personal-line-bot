@@ -3,9 +3,9 @@ import dotenv from 'dotenv'
 
 import { Admin } from './models/admin'
 import { Assignment } from './models/assignment'
-import { Class } from './models/class'
-import { ClassCourse } from './models/class-course'
 import { Course } from './models/course'
+import { CourseGrade } from './models/course-grade'
+import { Grade } from './models/grade'
 
 dotenv.config()
 
@@ -18,7 +18,7 @@ export const dataSource = new DataSource({
     database: process.env.DATABASE_NAME || 'line_bot',
     synchronize: true,
     logging: true,
-    entities: [Admin, Assignment, Class, ClassCourse, Course],
+    entities: [Admin, Assignment, Course, CourseGrade, Grade],
     subscribers: [],
     migrations: [],
 })
