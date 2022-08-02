@@ -27,7 +27,11 @@ class AdminService {
         }
 
         const token = jwt.sign({ username, password }, secret, { expiresIn: '1h'})
-        
+
         return token
+    }
+
+    async register(admin: Admin) {
+
     }
 }

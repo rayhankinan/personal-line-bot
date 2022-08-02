@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+
 import { CourseGrade } from './course-grade'
 
 @Entity()

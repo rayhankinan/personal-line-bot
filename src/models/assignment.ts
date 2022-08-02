@@ -1,4 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+
 import { Admin } from './admin'
 import { CourseGrade } from './course-grade'
 

@@ -1,5 +1,12 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import bcrypt from 'bcrypt'
+import dotenv from 'dotenv'
+
 import { Assignment } from './assignment'
+
+dotenv.config()
+
+export const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
 
 @Entity()
 export class Admin extends BaseEntity {
@@ -20,4 +27,10 @@ export class Admin extends BaseEntity {
 
     @UpdateDateColumn()
     updatedAt: Date
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, saltRounds)
+    }
 }

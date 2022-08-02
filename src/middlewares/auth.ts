@@ -20,8 +20,8 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         }
 
         (req as AuthRequest).token = jwt.verify(token, secret)
-        next()
 
+        next()
     } catch (err) {
         res.status(StatusCodes.UNAUTHORIZED).send(ReasonPhrases.UNAUTHORIZED)
     }
