@@ -26,6 +26,9 @@ class App {
         this.server.use('/webhook', [
             webhookRoute
         ])
+        this.server.use('/api', [
+            
+        ])
     }
 }
 
