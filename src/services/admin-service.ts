@@ -31,7 +31,9 @@ class AdminService {
         return token
     }
 
-    async register(admin: Admin) {
-
+    async store(admin: Admin) {
+        await admin.save()
     }
 }
+
+export const adminService = new AdminService()

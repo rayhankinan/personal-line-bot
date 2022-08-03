@@ -1,6 +1,6 @@
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction} from 'express'
-import { ReasonPhrases, StatusCodes } from 'http-status-codes' 
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -16,13 +16,13 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         const token = req.header('Authorization')?.replace('Bearer', '')
 
         if (!token) {
-            throw new Error()
+            throw new Error(ReasonPhrases.UNAUTHORIZED)
         }
 
         (req as AuthRequest).token = jwt.verify(token, secret)
-
         next()
-    } catch (err) {
-        res.status(StatusCodes.UNAUTHORIZED).send(ReasonPhrases.UNAUTHORIZED)
+
+    } catch (error) {
+        res.status(StatusCodes.UNAUTHORIZED).send(error)
     }
 }

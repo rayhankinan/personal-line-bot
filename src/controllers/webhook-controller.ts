@@ -1,8 +1,9 @@
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
 
 class WebhookController {
     async default(req: Request, res: Response) {
-        return res.json({ message: "Hello World"})
+        return res.status(StatusCodes.OK).send('Hello World')
     }
 }
 

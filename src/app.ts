@@ -2,6 +2,7 @@ import express, { Express } from 'express'
 import 'reflect-metadata'
 
 import { webhookRoute } from './routes/webhook-route'
+import { adminRoute } from './routes/admin-route'
 
 class App {
     server: Express
@@ -27,7 +28,7 @@ class App {
             webhookRoute
         ])
         this.server.use('/api', [
-            
+            adminRoute
         ])
     }
 }
