@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes'
 
 class WebhookController {
     async default(req: Request, res: Response) {
-        return res.status(StatusCodes.OK).send('Hello World')
+        return res.status(StatusCodes.OK).json({ message: 'Hello World' })
     }
 }
 

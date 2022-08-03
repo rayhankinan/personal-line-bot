@@ -6,18 +6,32 @@ import { Assignment } from './assignment'
 
 dotenv.config()
 
-export const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
+const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
+
+export enum UserRole {
+    ADMIN = 'admin',
+    EDITOR = 'editor'
+}
 
 @Entity()
-export class Admin extends BaseEntity {
+export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({
+        unique: true
+    })
     username: string
 
     @Column()
     password: string
+
+    @Column({
+        type: 'enum',
+        enum: UserRole,
+        default: UserRole.EDITOR
+    })
+    role: UserRole
 
     @OneToMany(() => Assignment, (assignment) => assignment.id)
     assignmments: Assignment[]

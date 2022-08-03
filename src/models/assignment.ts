@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 
-import { Admin } from './admin'
+import { User } from './user'
 import { CourseGrade } from './course-grade'
 
 @Entity()
@@ -17,9 +17,9 @@ export class Assignment extends BaseEntity {
     @Column()
     deadline: Date
 
-    @ManyToOne(() => Admin, (admin) => admin.id)
-    @JoinColumn({ name: 'adminId'})
-    admin: Admin
+    @ManyToOne(() => User, (user) => user.id)
+    @JoinColumn({ name: 'userId'})
+    user: User
 
     @ManyToOne(() => CourseGrade, (coursegrade) => coursegrade.id)
     @JoinColumn({ name: 'coursegradeId'})

@@ -1,9 +1,8 @@
 import jwt, { Secret, JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction} from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import createHttpError from 'http-errors'
 import dotenv from 'dotenv'
-
-import { getErrorMessage } from '../utils/error-util'
 
 dotenv.config()
 
@@ -15,16 +14,16 @@ export interface AuthRequest extends Request {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const token = req.header('Authorization')?.replace('Bearer', '')
-
+        const token = req.header('Authorization')?.replace('Bearer ', '')
         if (!token) {
-            throw new Error(ReasonPhrases.UNAUTHORIZED)
+            throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
         }
 
         (req as AuthRequest).token = jwt.verify(token, secret)
+
         next()
 
     } catch (error) {
-        res.status(StatusCodes.UNAUTHORIZED).send(getErrorMessage(error))
+        res.status(error?.status || StatusCodes.INTERNAL_SERVER_ERROR).json({ message: error?.message || ReasonPhrases.INTERNAL_SERVER_ERROR })
     }
 }

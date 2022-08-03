@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm'
 import dotenv from 'dotenv'
 
-import { Admin } from './models/admin'
+import { User } from './models/user'
 import { Assignment } from './models/assignment'
 import { Course } from './models/course'
 import { CourseGrade } from './models/course-grade'
@@ -18,7 +18,7 @@ export const dataSource = new DataSource({
     database: process.env.DATABASE_NAME || 'line_bot',
     synchronize: true,
     logging: true,
-    entities: [Admin, Assignment, Course, CourseGrade, Grade],
+    entities: [User, Assignment, Course, CourseGrade, Grade],
     subscribers: [],
     migrations: [],
 })
