@@ -3,6 +3,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 
 import { Admin } from '../models/admin'
 import { adminService } from '../services/admin-service'
+import { getErrorMessage } from '../utils/error-util'
 
 class AdminController {
     async login(req: Request, res: Response) {
@@ -18,7 +19,7 @@ class AdminController {
             res.status(StatusCodes.OK).json({ token: tokenAdmin })
 
         } catch (error) {
-            res.status(StatusCodes.UNAUTHORIZED).send(error)
+            res.status(StatusCodes.UNAUTHORIZED).send(getErrorMessage(error))
         }
     }
 
@@ -35,7 +36,7 @@ class AdminController {
             res.status(StatusCodes.CREATED).send(ReasonPhrases.CREATED)
 
         } catch (error) {
-            res.status(StatusCodes.CONFLICT).send(error)
+            res.status(StatusCodes.CONFLICT).send(getErrorMessage(error))
         }
     }
 }

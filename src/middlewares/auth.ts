@@ -3,6 +3,8 @@ import { Request, Response, NextFunction} from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import dotenv from 'dotenv'
 
+import { getErrorMessage } from '../utils/error-util'
+
 dotenv.config()
 
 export const secret: Secret = process.env.JWT_SECRET_KEY
@@ -23,6 +25,6 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
         next()
 
     } catch (error) {
-        res.status(StatusCodes.UNAUTHORIZED).send(error)
+        res.status(StatusCodes.UNAUTHORIZED).send(getErrorMessage(error))
     }
 }

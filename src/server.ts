@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 
 import { app } from './app'
 import { dataSource } from './data-source'
+import { getErrorMessage } from './utils/error-util'
 
 dotenv.config()
 
@@ -15,5 +16,5 @@ dataSource.initialize()
         })
     })
     .catch((error) => {
-        console.log(error)
+        console.log(getErrorMessage(error))
     })
