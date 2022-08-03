@@ -1,4 +1,4 @@
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { AfterLoad, BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
@@ -15,6 +15,8 @@ export enum UserRole {
 
 @Entity()
 export class User extends BaseEntity {
+    private tempPassword: string
+
     @PrimaryGeneratedColumn()
     id: number
 
@@ -45,6 +47,13 @@ export class User extends BaseEntity {
     @BeforeInsert()
     @BeforeUpdate()
     async hashPassword() {
-        this.password = await bcrypt.hash(this.password, saltRounds)
+        if (this.tempPassword !== this.password) {
+            this.password = await bcrypt.hash(this.password, saltRounds)
+        }
+    }
+
+    @AfterLoad()
+    loadTempPassword() {
+        this.tempPassword = this.password
     }
 }
