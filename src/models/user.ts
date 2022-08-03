@@ -33,8 +33,8 @@ export class User extends BaseEntity {
     })
     role: UserRole
 
-    @OneToMany(() => Assignment, (assignment) => assignment.id)
-    assignmments: Assignment[]
+    @OneToMany(() => Assignment, (assignment) => assignment.user)
+    assignments: Assignment[]
 
     @CreateDateColumn()
     createdAt: Date

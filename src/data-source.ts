@@ -20,5 +20,5 @@ export const dataSource = new DataSource({
     logging: true,
     entities: [User, Assignment, Course, CourseGrade, Grade],
     subscribers: [],
-    migrations: [],
+    migrations: []
 })

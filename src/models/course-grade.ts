@@ -11,11 +11,17 @@ export class CourseGrade extends BaseEntity {
     @Column()
     lecturer: string
 
-    @ManyToOne(() => Course, (course) => course.id)
+    @Column()
+    courseId: number
+
+    @Column()
+    gradeId: number
+
+    @ManyToOne(() => Course, (course) => course.id, { cascade: true })
     @JoinColumn({ name: 'courseId' })
     course: Course
 
-    @ManyToOne(() => Grade, (grade) => grade.id)
+    @ManyToOne(() => Grade, (grade) => grade.id, { cascade: true })
     @JoinColumn({ name: 'gradeId' })
     grade: Grade
 

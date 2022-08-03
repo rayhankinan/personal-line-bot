@@ -17,12 +17,18 @@ export class Assignment extends BaseEntity {
     @Column()
     deadline: Date
 
-    @ManyToOne(() => User, (user) => user.id)
-    @JoinColumn({ name: 'userId'})
+    @Column()
+    userId: number
+
+    @Column()
+    coursegradeId: number
+
+    @ManyToOne(() => User, (user) => user.id, { cascade: true })
+    @JoinColumn({ name: 'userId' })
     user: User
 
-    @ManyToOne(() => CourseGrade, (coursegrade) => coursegrade.id)
-    @JoinColumn({ name: 'coursegradeId'})
+    @ManyToOne(() => CourseGrade, (coursegrade) => coursegrade.id, { cascade: true })
+    @JoinColumn({ name: 'coursegradeId' })
     coursegrade: CourseGrade
 
     @CreateDateColumn()

@@ -42,6 +42,40 @@ class UserService {
     async store(user: User) {
         await user.save()
     }
+
+    async index() {
+        const users = await User.find()
+
+        return users
+    }
+
+    async show(id: number) {
+        const user = await User.findOne({
+            where: { id },
+            relations: ['assignments']
+        })
+
+        return user
+    }
+
+    async update(id: number, username: string, password: string) {
+        const user = await User.findOne({
+            where: { id }
+        })
+
+        user.username = username || user.username
+        user.password = password || user.password
+
+        await user.save()
+    }
+
+    async delete(id: number) {
+        const user = await User.findOne({
+            where: { id }
+        })
+
+        await user.remove()
+    }
 }
 
 export const userService = new UserService()

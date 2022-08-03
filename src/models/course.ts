@@ -10,7 +10,7 @@ export class Course extends BaseEntity {
     @Column()
     title: string
 
-    @OneToMany(() => CourseGrade, (coursegrade) => coursegrade.id)
+    @OneToMany(() => CourseGrade, (coursegrade) => coursegrade.course)
     coursegrades: CourseGrade[]
 
     @CreateDateColumn()
