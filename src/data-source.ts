@@ -6,6 +6,7 @@ import { Assignment } from './models/assignment'
 import { Course } from './models/course'
 import { CourseGrade } from './models/course-grade'
 import { Grade } from './models/grade'
+import { UserSubscriber } from './subscribers/user-subscriber'
 
 dotenv.config()
 
@@ -19,6 +20,6 @@ export const dataSource = new DataSource({
     synchronize: true,
     logging: true,
     entities: [User, Assignment, Course, CourseGrade, Grade],
-    subscribers: [],
+    subscribers: [UserSubscriber],
     migrations: []
 })
