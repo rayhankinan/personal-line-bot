@@ -20,7 +20,7 @@ class CourseController {
 
     async index(req: Request, res: Response) {
         try {
-            const courses = courseService.index()
+            const courses = await courseService.index()
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: courses })
 
         } catch (error) {
