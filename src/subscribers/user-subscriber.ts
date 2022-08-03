@@ -10,7 +10,6 @@ const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
-
     listenTo() {
         return User;
     }

@@ -8,13 +8,14 @@ import { UserRole } from '../models/user'
 
 dotenv.config()
 
-export const secret: Secret = process.env.JWT_SECRET_KEY
+const secret: Secret = process.env.JWT_SECRET_KEY
 
 export interface AuthRequest extends Request {
     token: AuthToken
 }
 
 export interface AuthToken {
+    id: number
     username: string
     password: string
     role: UserRole

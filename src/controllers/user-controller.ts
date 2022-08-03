@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import createHttpError from 'http-errors'
 
-import { User, UserRole } from '../models/user'
 import { userService } from '../services/user-service'
 import { AuthRequest } from '../middlewares/auth'
 
@@ -10,13 +8,8 @@ class UserController {
     async token(req: Request, res: Response) {
         try {
             const { username, password } = req.body
-
-            const user = new User()
-            user.username = username
-            user.password = password
-
-            const token = await userService.token(user)
-
+            
+            const token = await userService.token(username, password)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, token })
 
         } catch (error) {
@@ -29,16 +22,7 @@ class UserController {
             const { username, password } = req.body
             const { token } = (req as AuthRequest)
 
-            if (token.role != UserRole.ADMIN) {
-                throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
-            }
-
-            const user = new User()
-            user.username = username
-            user.password = password
-
-            await userService.store(user)
-
+            await userService.store(username, password, token)
             res.status(StatusCodes.CREATED).json({ message: ReasonPhrases.CREATED })
 
         } catch (error) {
@@ -50,12 +34,7 @@ class UserController {
         try {
             const { token } = (req as AuthRequest)
 
-            if (token.role != UserRole.ADMIN) {
-                throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
-            }
-
-            const users = await userService.index()
-
+            const users = await userService.index(token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: users })
 
         } catch (error) {
@@ -68,12 +47,7 @@ class UserController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            if (token.role != UserRole.ADMIN) {
-                throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
-            }
-
-            const user = await userService.show(parseInt(id, 10))
-
+            const user = await userService.show(parseInt(id, 10), token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: user })
 
         } catch (error) {
@@ -87,12 +61,7 @@ class UserController {
             const { username, password } = req.body
             const { token } = (req as AuthRequest)
 
-            if (token.role != UserRole.ADMIN) {
-                throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
-            }
-
-            await userService.update(parseInt(id, 10), username, password)
-
+            await userService.update(parseInt(id, 10), username, password, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
@@ -105,12 +74,7 @@ class UserController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            if (token.role != UserRole.ADMIN) {
-                throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
-            }
-
-            await userService.delete(parseInt(id, 10))
-
+            await userService.delete(parseInt(id, 10), token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
