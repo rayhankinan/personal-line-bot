@@ -4,12 +4,20 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import createHttpError from 'http-errors'
 import dotenv from 'dotenv'
 
+import { UserRole } from '../models/user'
+
 dotenv.config()
 
 export const secret: Secret = process.env.JWT_SECRET_KEY
 
 export interface AuthRequest extends Request {
-    token: string | JwtPayload
+    token: AuthToken
+}
+
+export interface AuthToken {
+    username: string
+    password: string
+    role: UserRole
 }
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
@@ -19,7 +27,7 @@ export const auth = async (req: Request, res: Response, next: NextFunction) => {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
         }
 
-        (req as AuthRequest).token = jwt.verify(token, secret)
+        (req as AuthRequest).token = jwt.verify(token, secret) as AuthToken
 
         next()
 

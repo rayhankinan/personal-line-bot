@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import createHttpError from 'http-errors'
 
-import { User } from '../models/user'
+import { User, UserRole } from '../models/user'
 import { userService } from '../services/user-service'
 import { AuthRequest } from '../middlewares/auth'
 
@@ -29,7 +29,7 @@ class UserController {
             const { username, password } = req.body
             const { token } = (req as AuthRequest)
 
-            if (!token) {
+            if (token.role != UserRole.ADMIN) {
                 throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
             }
 

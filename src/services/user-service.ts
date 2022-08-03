@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 
 import { User } from '../models/user'
+import { AuthToken } from '../middlewares/auth'
 
 dotenv.config()
 
@@ -27,14 +28,13 @@ class UserService {
         }
 
         const { role } = foundUser
-        const token = jwt.sign({ 
-                username, 
-                password, 
-                role 
-            }, secret, { 
-                expiresIn: '1h'
-            }
-        )
+        const payload: AuthToken = {
+            username, 
+            password, 
+            role
+        }
+
+        const token = jwt.sign(payload, secret, { expiresIn: '1h' })
 
         return token
     }
