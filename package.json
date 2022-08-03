@@ -10,6 +10,7 @@
     "start:prod": "node dist/server.js"
   },
   "dependencies": {
+    "@line/bot-sdk": "^7.5.0",
     "@types/bcrypt": "^5.0.0",
     "@types/http-errors": "^1.8.2",
     "@types/jsonwebtoken": "^8.5.8",
