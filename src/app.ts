@@ -1,6 +1,7 @@
 import express, { Express } from 'express'
 import 'reflect-metadata'
 
+import { coursegradeRoute } from './routes/course-grade-route'
 import { courseRoute } from './routes/course-route'
 import { userRoute } from './routes/user-route'
 import { webhookRoute } from './routes/webhook-route'
@@ -29,6 +30,7 @@ class App {
             webhookRoute
         ])
         this.server.use('/api', [
+            coursegradeRoute,
             courseRoute,
             userRoute
         ])
