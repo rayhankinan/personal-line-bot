@@ -21,14 +21,14 @@ class CourseGradeService {
     }
 
     async index() {
-        // PUBLIC
+        // AUTHORIZED ONLY
         const coursegrades = await CourseGrade.find()
 
         return coursegrades
     }
 
     async show(id: number) {
-        // PUBLIC
+        // AUTHORIZED ONLY
         const coursegrade = await CourseGrade.findOne({
             where: { id },
             relations: ['course', 'grade']

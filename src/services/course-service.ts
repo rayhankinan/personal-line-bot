@@ -19,14 +19,14 @@ class CourseService {
     }
 
     async index() {
-        // PUBLIC
+        // AUTHORIZED ONLY
         const courses = await Course.find()
 
         return courses
     }
 
     async show(id: number) {
-        // PUBLIC
+        // AUTHORIZED ONLY
         const course = await Course.findOne({
             where: { id },
             relations: ['coursegrades']

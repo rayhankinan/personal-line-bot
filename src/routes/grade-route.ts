@@ -5,7 +5,7 @@ import { auth } from '../middlewares/auth'
 
 export const gradeRoute = Router()
     .post('/grade', auth, gradeController.store)
-    .get('/grade', gradeController.index)
-    .get('/grade/:id', gradeController.show)
+    .get('/grade', auth, gradeController.index)
+    .get('/grade/:id', auth, gradeController.show)
     .put('/grade/:id', auth, gradeController.update)
     .delete('/grade/:id', auth, gradeController.delete)
