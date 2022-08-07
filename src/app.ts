@@ -25,10 +25,9 @@ class App {
         this.server.use('/webhook', [
             middleware(lineConfig),
             express.json(), 
-            express.urlencoded({
-                extended: true
-            })
-        ], [
+            express.urlencoded({ extended: true })
+        ], 
+        [
             webhookRoute
         ])
     }
@@ -36,11 +35,10 @@ class App {
     addAPI() {
         this.server.use('/api', [
             express.json(), 
-            express.urlencoded({
-                extended: true
-            }),
+            express.urlencoded({ extended: true }),
             auth
-        ], [
+        ], 
+        [
             assignmentRoute,
             courseRoute,
             coursegradeRoute,
