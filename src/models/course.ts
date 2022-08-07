@@ -7,7 +7,9 @@ export class Course extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column()
+    @Column({
+        unique: true
+    })
     code: string
 
     @Column()
