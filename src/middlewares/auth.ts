@@ -23,6 +23,11 @@ export interface AuthToken {
 
 export const auth = async (req: Request, res: Response, next: NextFunction) => {
     try {
+        if (req.path === '/user/token') {
+            next()
+            return
+        }
+
         const token = req.header('Authorization')?.replace('Bearer ', '')
         if (!token) {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)

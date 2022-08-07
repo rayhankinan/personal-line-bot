@@ -1,4 +1,5 @@
 import express, { Express } from 'express'
+import { middleware } from '@line/bot-sdk'
 import 'reflect-metadata'
 
 import { assignmentRoute } from './routes/assignment-route'
@@ -7,6 +8,8 @@ import { coursegradeRoute } from './routes/course-grade-route'
 import { gradeRoute } from './routes/grade-route'
 import { userRoute } from './routes/user-route'
 import { webhookRoute } from './routes/webhook-route'
+import { lineConfig } from './config/line-config'
+import { auth } from './middlewares/auth'
 
 class App {
     server: Express
@@ -14,24 +17,30 @@ class App {
     constructor() {
         this.server = express()
 
-        this.middlewares()
-        this.routes()
+        this.addLineBot()
+        this.addAPI()
     }
 
-    middlewares() {
-        this.server.use(
+    addLineBot() {
+        this.server.use('/webhook', [
+            middleware(lineConfig),
             express.json(), 
             express.urlencoded({
                 extended: true
             })
-        )
-    }
-
-    routes() {
-        this.server.use('/webhook', [
+        ], [
             webhookRoute
         ])
+    }
+
+    addAPI() {
         this.server.use('/api', [
+            express.json(), 
+            express.urlencoded({
+                extended: true
+            }),
+            auth
+        ], [
             assignmentRoute,
             courseRoute,
             coursegradeRoute,
