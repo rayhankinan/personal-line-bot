@@ -8,6 +8,9 @@ export class Course extends BaseEntity {
     id: number
 
     @Column()
+    code: string
+
+    @Column()
     title: string
 
     @OneToMany(() => CourseGrade, (coursegrade) => coursegrade.course)

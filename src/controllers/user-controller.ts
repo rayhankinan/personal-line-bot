@@ -7,7 +7,7 @@ import { AuthRequest } from '../middlewares/auth'
 class UserController {
     async token(req: Request, res: Response) {
         try {
-            const { username, password } = req.body
+            const { username, password }: { username: string, password: string } = req.body
             
             const token = await userService.token(username, password)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, token })
@@ -19,7 +19,7 @@ class UserController {
 
     async store(req: Request, res: Response) {
         try {
-            const { username, password } = req.body
+            const { username, password }: { username: string, password: string } = req.body
             const { token } = (req as AuthRequest)
 
             await userService.store(username, password, token)
@@ -58,7 +58,7 @@ class UserController {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const { username, password } = req.body
+            const { username, password }: { username: string, password: string } = req.body
             const { token } = (req as AuthRequest)
 
             await userService.update(parseInt(id, 10), username, password, token)

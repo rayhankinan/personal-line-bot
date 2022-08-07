@@ -7,10 +7,10 @@ import { AuthRequest } from '../middlewares/auth'
 class GradeController {
     async store(req: Request, res: Response) {
         try {
-            const { major, year } = req.body
+            const { major, year }: { major: string, year: number } = req.body
             const { token } = (req as AuthRequest)
 
-            await gradeService.store(major, parseInt(year, 10), token)
+            await gradeService.store(major, year, token)
             res.status(StatusCodes.CREATED).json({ message: ReasonPhrases.CREATED })
 
         } catch (error) {
@@ -43,7 +43,7 @@ class GradeController {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const { major, year } = req.body
+            const { major, year }: { major: string, year: number } = req.body
             const { token } = (req as AuthRequest)
 
             await gradeService.update(parseInt(id, 10), major, year, token)

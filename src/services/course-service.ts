@@ -6,13 +6,14 @@ import { UserRole } from '../models/user'
 import { AuthToken } from '../middlewares/auth'
 
 class CourseService {
-    async store(title: string, token: AuthToken) {
+    async store(code: string, title: string, token: AuthToken) {
         // ADMIN ONLY
         if (token.role !== UserRole.ADMIN) {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
         }
 
         const course = new Course()
+        course.code = code
         course.title = title
 
         await course.save()
@@ -35,7 +36,7 @@ class CourseService {
         return course
     }
 
-    async update(id: number, title: string, token: AuthToken) {
+    async update(id: number, code: string, title: string, token: AuthToken) {
         // ADMIN ONLY
         if (token.role !== UserRole.ADMIN) {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
@@ -44,6 +45,7 @@ class CourseService {
         const course = await Course.findOne({
             where: { id }
         })
+        course.code = code
         course.title = title
 
         await course.save()

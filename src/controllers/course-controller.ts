@@ -7,10 +7,10 @@ import { AuthRequest } from '../middlewares/auth'
 class CourseController {
     async store(req: Request, res: Response) {
         try {
-            const { title } = req.body
+            const { code, title }: { code: string, title: string } = req.body
             const { token } = (req as AuthRequest)
 
-            await courseService.store(title, token)
+            await courseService.store(code, title, token)
             res.status(StatusCodes.CREATED).json({ message: ReasonPhrases.CREATED })
 
         } catch (error) {
@@ -43,10 +43,10 @@ class CourseController {
     async update(req: Request, res: Response) {
         try {
             const { id } = req.params
-            const { title } = req.body
+            const { code, title }: { code: string, title: string } = req.body
             const { token } = (req as AuthRequest)
 
-            await courseService.update(parseInt(id, 10), title, token)
+            await courseService.update(parseInt(id, 10), code, title, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
