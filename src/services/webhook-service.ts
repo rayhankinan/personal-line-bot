@@ -1,8 +1,10 @@
-import { Client, ClientConfig, EventMessage, FlexMessage, TextEventMessage, TextMessage } from '@line/bot-sdk'
+import { Client, ClientConfig, EventMessage, TextEventMessage } from '@line/bot-sdk'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import createHttpError from 'http-errors'
 
 import { clientConfig } from '../config/line-config'
+import { Assignment } from '../models/assignment'
+
 class WebhookService {
     client: Client
 
@@ -18,7 +20,7 @@ class WebhookService {
             throw createHttpError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST)
         }
 
-        const [ prodi, year, period ] = regex.exec(text)
+        const [ major, year, period ] = regex.exec(text)
 
         switch (period.toLowerCase()) {
             case 'hari ini':
