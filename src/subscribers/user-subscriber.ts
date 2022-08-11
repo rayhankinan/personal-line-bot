@@ -1,12 +1,10 @@
 import { EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from 'typeorm'
 import bcrypt from 'bcrypt'
-import dotenv from 'dotenv'
 
 import { User } from '../models/user'
+import { bcryptConfig } from '../config/bcrypt-config'
 
-dotenv.config()
-
-const saltRounds = parseInt(process.env.SALT_ROUNDS, 10)
+const saltRounds = bcryptConfig.saltRounds
 
 @EventSubscriber()
 export class UserSubscriber implements EntitySubscriberInterface<User> {

@@ -8,7 +8,7 @@ import { coursegradeRoute } from './routes/course-grade-route'
 import { gradeRoute } from './routes/grade-route'
 import { userRoute } from './routes/user-route'
 import { webhookRoute } from './routes/webhook-route'
-import { lineConfig } from './config/line-config'
+import { middlewareConfig } from './config/line-config'
 import { auth } from './middlewares/auth'
 
 class App {
@@ -22,29 +22,37 @@ class App {
     }
 
     addLineBot() {
-        this.server.use('/webhook', [
-            middleware(lineConfig),
-            express.json(), 
-            express.urlencoded({ extended: true })
-        ], 
-        [
-            webhookRoute
-        ])
+        this.server.use(
+            '/webhook', 
+            [
+                middleware(middlewareConfig),
+                express.json(), 
+                express.urlencoded({ 
+                    extended: true 
+                })
+            ], 
+            [
+                webhookRoute
+            ]
+        )
     }
 
     addAPI() {
-        this.server.use('/api', [
-            express.json(), 
-            express.urlencoded({ extended: true }),
-            auth
-        ], 
-        [
-            assignmentRoute,
-            courseRoute,
-            coursegradeRoute,
-            gradeRoute,
-            userRoute
-        ])
+        this.server.use(
+            '/api', 
+            [
+                express.json(), 
+                express.urlencoded({ extended: true }),
+                auth
+            ], 
+            [
+                assignmentRoute,
+                courseRoute,
+                coursegradeRoute,
+                gradeRoute,
+                userRoute
+            ]
+        )
     }
 }
 

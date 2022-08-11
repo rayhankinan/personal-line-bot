@@ -1,11 +1,8 @@
-import dotenv from 'dotenv'
-
 import { app } from './app'
 import { dataSource } from './data-source'
+import { serverConfig } from './config/server-config'
 
-dotenv.config()
-
-const port = parseInt(process.env.PORT, 10) || 8080
+const port = serverConfig.port
 const server = app.server
 
 dataSource.initialize()

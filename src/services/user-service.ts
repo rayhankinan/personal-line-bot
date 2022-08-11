@@ -2,14 +2,12 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import createHttpError from 'http-errors'
 import jwt, { Secret } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import dotenv from 'dotenv'
 
 import { User, UserRole } from '../models/user'
 import { AuthToken } from '../middlewares/auth'
+import { jwtConfig } from '../config/jwt-config'
 
-dotenv.config()
-
-const secret: Secret = process.env.JWT_SECRET_KEY
+const secret: Secret = jwtConfig.secret
 
 class UserService {
     async token(username: string, password: string) {

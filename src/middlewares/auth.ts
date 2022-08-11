@@ -2,13 +2,11 @@ import jwt, { Secret } from 'jsonwebtoken'
 import { Request, Response, NextFunction} from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import createHttpError from 'http-errors'
-import dotenv from 'dotenv'
 
 import { UserRole } from '../models/user'
+import { jwtConfig } from '../config/jwt-config'
 
-dotenv.config()
-
-const secret: Secret = process.env.JWT_SECRET_KEY
+const secret = jwtConfig.secret
 
 export interface AuthRequest extends Request {
     token: AuthToken
