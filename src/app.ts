@@ -27,9 +27,7 @@ class App {
             [
                 middleware(middlewareConfig),
                 express.json(), 
-                express.urlencoded({ 
-                    extended: true 
-                })
+                express.urlencoded({ extended: true })
             ], 
             [
                 webhookRoute

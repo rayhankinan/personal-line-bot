@@ -4,25 +4,25 @@ import createHttpError from 'http-errors'
 import { WebhookRequestBody } from '@line/bot-sdk'
 
 class WebhookController {
-    async default(req: Request, res: Response) {
+    async main(req: Request, res: Response) {
         try {
             const { events } = req.body as WebhookRequestBody
 
             events.forEach((event) => {
                 switch (event.type) {
-                    case "message":
+                    case 'message':
                         break
 
-                    case "follow":
+                    case 'follow':
                         break
 
-                    case "unfollow":
+                    case 'unfollow':
                         break
 
-                    case "join":
+                    case 'join':
                         break
 
-                    case "leave":
+                    case 'leave':
                         break
 
                     default:
