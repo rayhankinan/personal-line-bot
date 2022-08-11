@@ -35,7 +35,7 @@ class AssignmentController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            const assignment = await assignmentService.show(parseInt(id, 10), token)
+            const assignment = await assignmentService.show(+id, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: assignment })
 
         } catch (error) {
@@ -49,7 +49,7 @@ class AssignmentController {
             const { title, description, deadline, userId, coursegradeId }: { title: string, description: string, deadline: Date, userId: number, coursegradeId: number } = req.body
             const { token } = (req as AuthRequest)
 
-            await assignmentService.update(parseInt(id, 10), title, description, deadline, userId, coursegradeId, token)
+            await assignmentService.update(+id, title, description, deadline, userId, coursegradeId, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
@@ -62,7 +62,7 @@ class AssignmentController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            await assignmentService.delete(parseInt(id, 10), token)
+            await assignmentService.delete(+id, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {

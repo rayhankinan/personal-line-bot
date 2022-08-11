@@ -32,7 +32,7 @@ class CourseGradeController {
         try {
             const { id } = req.params
 
-            const coursegrade = await coursegradeService.show(parseInt(id, 10))
+            const coursegrade = await coursegradeService.show(+id)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: coursegrade })
 
         } catch (error) {
@@ -46,7 +46,7 @@ class CourseGradeController {
             const { lecturer, courseId, gradeId }: { lecturer: string, courseId: number, gradeId: number } = req.body
             const { token } = (req as AuthRequest)
 
-            await coursegradeService.update(parseInt(id, 10), lecturer, courseId, gradeId, token)
+            await coursegradeService.update(+id, lecturer, courseId, gradeId, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK})
 
         } catch (error) {
@@ -59,7 +59,7 @@ class CourseGradeController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            await coursegradeService.delete(parseInt(id, 10), token)
+            await coursegradeService.delete(+id, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK})
 
         } catch (error) {

@@ -47,7 +47,7 @@ class UserController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            const user = await userService.show(parseInt(id, 10), token)
+            const user = await userService.show(+id, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK, data: user })
 
         } catch (error) {
@@ -61,7 +61,7 @@ class UserController {
             const { username, password }: { username: string, password: string } = req.body
             const { token } = (req as AuthRequest)
 
-            await userService.update(parseInt(id, 10), username, password, token)
+            await userService.update(+id, username, password, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
@@ -74,7 +74,7 @@ class UserController {
             const { id } = req.params
             const { token } = (req as AuthRequest)
 
-            await userService.delete(parseInt(id, 10), token)
+            await userService.delete(+id, token)
             res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
 
         } catch (error) {
