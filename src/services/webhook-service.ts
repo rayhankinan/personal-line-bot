@@ -1,6 +1,6 @@
 import { Client, ClientConfig, EventMessage, TextEventMessage } from '@line/bot-sdk'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { Between } from 'typeorm'
+import { Between, MoreThanOrEqual } from 'typeorm'
 import createHttpError from 'http-errors'
 import moment from 'moment'
 
@@ -27,6 +27,9 @@ class WebhookService {
 
         switch (period.toLowerCase()) {
             case 'hari ini': {
+                const now = moment().toDate()
+                const nextMidnight = moment().endOf('day').toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -34,7 +37,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: Between(now, nextMidnight)
                     },
                     relations: {
                         coursegrade: {
@@ -48,6 +52,9 @@ class WebhookService {
             }
 
             case 'besok': {
+                const tomorrow = moment().endOf('day').toDate()
+                const tomorrowMidnight = moment().add(1, 'day').endOf('day').toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -55,7 +62,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: Between(tomorrow, tomorrowMidnight)
                     },
                     relations: {
                         coursegrade: {
@@ -70,6 +78,9 @@ class WebhookService {
                 
 
             case 'minggu ini': {
+                const now = moment().toDate()
+                const thisWeek = moment().endOf('week').toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -91,6 +102,9 @@ class WebhookService {
             }
 
             case 'minggu depan': {
+                const thisWeek = moment().endOf('week').toDate()
+                const nextWeek = moment().add(1, 'week').endOf('week').toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -98,7 +112,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: Between(thisWeek, nextWeek)
                     },
                     relations: {
                         coursegrade: {
@@ -112,6 +127,9 @@ class WebhookService {
             }
 
             case 'bulan ini': {
+                const now = moment().toDate()
+                const thisMonth = moment().endOf('month').toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -119,7 +137,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: Between(now, thisMonth)
                     },
                     relations: {
                         coursegrade: {
@@ -133,6 +152,8 @@ class WebhookService {
             }
 
             case 'sejauh ini': {
+                const now = moment().toDate()
+
                 const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
@@ -140,7 +161,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: MoreThanOrEqual(now)
                     },
                     relations: {
                         coursegrade: {
