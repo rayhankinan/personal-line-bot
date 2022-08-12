@@ -20,26 +20,129 @@ class WebhookService {
             throw createHttpError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST)
         }
 
-        const [ major, year, period ] = regex.exec(text)
+        const [ major, yearStr, period ] = regex.exec(text)
+        const year = +yearStr
 
         switch (period.toLowerCase()) {
             case 'hari ini':
-                break
+                const assignmentsToday = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+
+                return assignmentsToday
 
             case 'besok':
-                break
+                const assignmentsTomorrow = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+
+                return assignmentsTomorrow
 
             case 'minggu ini':
-                break
+                const assignmentsThisWeek = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+                
+                return assignmentsThisWeek
 
             case 'minggu depan':
-                break
+                const assignmentsNextWeek = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+                
+                return assignmentsNextWeek
 
             case 'bulan ini':
-                break
+                const assignmentsThisMonth = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+                
+                return assignmentsThisMonth
 
             case 'sejauh ini':
-                break
+                const assignmentsThisFar = await Assignment.find({
+                    where : {
+                        coursegrade: {
+                            grade : {
+                                major,
+                                year
+                            }
+                        }
+                    },
+                    relations: {
+                        coursegrade: {
+                            grade: true
+                        }
+                    },
+                    cache: true
+                })
+                
+                return assignmentsThisFar
 
             default:
                 throw createHttpError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST)

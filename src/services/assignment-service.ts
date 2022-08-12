@@ -25,7 +25,8 @@ class AssigmentService {
     async index(token: AuthToken) {
         // ADMIN AND USER ONLY
         const assignments = await Assignment.find({
-            where: { userId: token.role !== UserRole.ADMIN ? token.id : undefined }
+            where: { userId: token.role !== UserRole.ADMIN ? token.id : undefined },
+            cache: true
         })
 
         return assignments
@@ -35,8 +36,14 @@ class AssigmentService {
         // ADMIN AND USER ONLY
         const assignment = await Assignment.findOne({
             where: { id },
-            relations: ['user', 'coursegrade']
+            relations: { 
+                user: true, 
+                coursegrade: true 
+            },
+            cache: true
         })
+
+
 
         if (token.role !== UserRole.ADMIN && token.id !== assignment.userId) {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
@@ -52,7 +59,8 @@ class AssigmentService {
         }
 
         const assignment = await Assignment.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
         assignment.title = title
         assignment.description = description
@@ -66,7 +74,8 @@ class AssigmentService {
     async delete(id: number, token: AuthToken) {
         // ADMIN AND USER ONLY
         const assignment = await Assignment.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
 
         if (token.role !== UserRole.ADMIN && token.id !== assignment.userId) {

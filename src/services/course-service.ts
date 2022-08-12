@@ -21,7 +21,9 @@ class CourseService {
 
     async index() {
         // AUTHORIZED ONLY
-        const courses = await Course.find()
+        const courses = await Course.find({
+            cache: true
+        })
 
         return courses
     }
@@ -30,7 +32,10 @@ class CourseService {
         // AUTHORIZED ONLY
         const course = await Course.findOne({
             where: { id },
-            relations: ['coursegrades']
+            relations: {
+                coursegrades: true
+            },
+            cache: true
         })
 
         return course
@@ -43,7 +48,8 @@ class CourseService {
         }
 
         const course = await Course.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
         course.code = code
         course.title = title
@@ -58,7 +64,8 @@ class CourseService {
         }
 
         const course = await Course.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
         
         await course.remove()

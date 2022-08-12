@@ -21,7 +21,9 @@ class GradeService {
 
     async index() {
         // AUTHORIZED ONLY
-        const grades = await Grade.find()
+        const grades = await Grade.find({
+            cache: true
+        })
 
         return grades
     }
@@ -30,7 +32,10 @@ class GradeService {
         // AUTHORIZED ONLY
         const grade = await Grade.findOne({
             where: { id },
-            relations: ['coursegrades']
+            relations: {
+                coursegrades: true
+            },
+            cache: true
         })
 
         return grade
@@ -43,7 +48,8 @@ class GradeService {
         }
 
         const grade = await Grade.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
         grade.major = major
         grade.year = year
@@ -58,7 +64,8 @@ class GradeService {
         }
 
         const grade = await Grade.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
 
         await grade.remove()

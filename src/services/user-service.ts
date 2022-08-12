@@ -16,7 +16,8 @@ class UserService {
         user.password = password
 
         const foundUser = await User.findOne({
-            where: { username }
+            where: { username },
+            cache: true
         })
         if (!foundUser) {
             throw createHttpError(StatusCodes.UNAUTHORIZED, 'Username is incorrect!')
@@ -58,7 +59,9 @@ class UserService {
             throw createHttpError(StatusCodes.UNAUTHORIZED, ReasonPhrases.UNAUTHORIZED)
         }
 
-        const users = await User.find()
+        const users = await User.find({
+            cache: true
+        })
 
         return users
     }
@@ -71,7 +74,10 @@ class UserService {
 
         const user = await User.findOne({
             where: { id },
-            relations: ['assignments']
+            relations: {
+                assignments: true
+            },
+            cache: true
         })
 
         // USERS CAN SEE THEIR OWN PASSWORD
@@ -89,7 +95,8 @@ class UserService {
         }
 
         const user = await User.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
         user.username = username || user.username
         user.password = password || user.password
@@ -104,7 +111,8 @@ class UserService {
         }
 
         const user = await User.findOne({
-            where: { id }
+            where: { id },
+            cache: true
         })
 
         await user.remove()
