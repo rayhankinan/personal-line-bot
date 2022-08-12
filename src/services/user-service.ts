@@ -1,7 +1,7 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import createHttpError from 'http-errors'
 import jwt, { Secret } from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
+import createHttpError from 'http-errors'
 
 import { User, UserRole } from '../models/user'
 import { AuthToken } from '../middlewares/auth'

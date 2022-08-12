@@ -1,6 +1,8 @@
 import { Client, ClientConfig, EventMessage, TextEventMessage } from '@line/bot-sdk'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { Between } from 'typeorm'
 import createHttpError from 'http-errors'
+import moment from 'moment'
 
 import { clientConfig } from '../config/line-config'
 import { Assignment } from '../models/assignment'
@@ -24,8 +26,8 @@ class WebhookService {
         const year = +yearStr
 
         switch (period.toLowerCase()) {
-            case 'hari ini':
-                const assignmentsToday = await Assignment.find({
+            case 'hari ini': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -42,10 +44,11 @@ class WebhookService {
                     cache: true
                 })
 
-                return assignmentsToday
+                break
+            }
 
-            case 'besok':
-                const assignmentsTomorrow = await Assignment.find({
+            case 'besok': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -62,10 +65,12 @@ class WebhookService {
                     cache: true
                 })
 
-                return assignmentsTomorrow
+                break
+            }
+                
 
-            case 'minggu ini':
-                const assignmentsThisWeek = await Assignment.find({
+            case 'minggu ini': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -82,10 +87,11 @@ class WebhookService {
                     cache: true
                 })
                 
-                return assignmentsThisWeek
+                break
+            }
 
-            case 'minggu depan':
-                const assignmentsNextWeek = await Assignment.find({
+            case 'minggu depan': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -102,10 +108,11 @@ class WebhookService {
                     cache: true
                 })
                 
-                return assignmentsNextWeek
+                break
+            }
 
-            case 'bulan ini':
-                const assignmentsThisMonth = await Assignment.find({
+            case 'bulan ini': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -122,10 +129,11 @@ class WebhookService {
                     cache: true
                 })
                 
-                return assignmentsThisMonth
+                break
+            }
 
-            case 'sejauh ini':
-                const assignmentsThisFar = await Assignment.find({
+            case 'sejauh ini': {
+                const assignments = await Assignment.find({
                     where : {
                         coursegrade: {
                             grade : {
@@ -142,10 +150,12 @@ class WebhookService {
                     cache: true
                 })
                 
-                return assignmentsThisFar
+                break
+            }
 
-            default:
+            default: {
                 throw createHttpError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST)
+            }
         }
     }
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import createHttpError from 'http-errors'
 import { WebhookRequestBody } from '@line/bot-sdk'
+import createHttpError from 'http-errors'
 
 import { webhookService } from '../services/webhook-service'
 
@@ -12,32 +12,38 @@ class WebhookController {
 
             for (const event of events) {
                 switch (event.type) {
-                    case 'message':
+                    case 'message': {
                         const { message, replyToken } = event
 
                         await webhookService.message(replyToken, message)
 
                         res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
                         break
+                    }
 
-                    case 'follow':
+                    case 'follow': {
                         res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
                         break
+                    }
 
-                    case 'unfollow':
+                    case 'unfollow': {
                         res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
                         break
+                    }
 
-                    case 'join':
+                    case 'join': {
                         res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
                         break
+                    }
 
-                    case 'leave':
+                    case 'leave': {
                         res.status(StatusCodes.OK).json({ message: ReasonPhrases.OK })
                         break
+                    }
 
-                    default:
+                    default: {
                         throw createHttpError(StatusCodes.BAD_REQUEST, ReasonPhrases.BAD_REQUEST)
+                    }
                 }
             }
 
