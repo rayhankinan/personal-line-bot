@@ -6,6 +6,7 @@ import moment from 'moment'
 
 import { clientConfig } from '../config/line-config'
 import { Assignment } from '../models/assignment'
+import { assignmentMessage } from '../views/assignment-message'
 
 class WebhookService {
     client: Client
@@ -48,6 +49,10 @@ class WebhookService {
                     cache: true
                 })
 
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
+
                 break
             }
 
@@ -73,6 +78,10 @@ class WebhookService {
                     cache: true
                 })
 
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
+
                 break
             }
                 
@@ -88,7 +97,8 @@ class WebhookService {
                                 major,
                                 year
                             }
-                        }
+                        },
+                        deadline: Between(now, thisWeek)
                     },
                     relations: {
                         coursegrade: {
@@ -97,6 +107,10 @@ class WebhookService {
                     },
                     cache: true
                 })
+
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
                 
                 break
             }
@@ -122,6 +136,10 @@ class WebhookService {
                     },
                     cache: true
                 })
+
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
                 
                 break
             }
@@ -147,6 +165,10 @@ class WebhookService {
                     },
                     cache: true
                 })
+
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
                 
                 break
             }
@@ -171,6 +193,10 @@ class WebhookService {
                     },
                     cache: true
                 })
+
+                const message = assignmentMessage(major, year, period, assignments)
+
+                await this.client.replyMessage(replyToken, message)
                 
                 break
             }
